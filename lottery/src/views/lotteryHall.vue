@@ -18,12 +18,12 @@
 		
 		
 	<!--切换效果-->
-		<div style="width:10rem;position: relative;height: 13rem;overflow: hidden;" >
+		<div style="width:10rem;position: relative;height: 13rem;overflow: scroll;" >
 		<div style="width:20rem;position: absolute;top:0;left: 0;" class="toLeft"  @touchstart="touchstart"
       @touchmove="touchmove" id="slider">	
 		
 		<!--选号-->
-		<div style="background:#077552 ;min-height: 14rem;padding: 0.2rem 0.5rem;overflow: scroll;width: 10rem;float: left;">
+		<div style="background:#077552 ;min-height: 13rem;padding: 0.2rem 0.5rem;overflow: scroll;width: 10rem;float: left;">
 			
 	<!--玩法选择-->
 		<div style="height: 1.1rem;margin-bottom: 0.4rem;">
@@ -36,7 +36,7 @@
 					</div>
 					<!--选项-->
 					<div style="width: 3.7rem;height: 5.5rem;background: #fff;position: absolute;top: 0;left:0;border-radius:0.0825rem ;z-index: 8;" v-show="playtype">
-						<span class="change" v-for="i,index in playmain" @click="a(i,index)">{{i}}</span>
+						<span class="change" v-for="i,index in playmain" @click="a(i,index)" :key="index">{{i}}</span>
 					</div>
 				</button>
 			</div>
@@ -51,7 +51,7 @@
 					<p style="font-size: 0.4rem;color:#48b892;"><span class="jian">和值</span>  猜开奖号码相加的和</p>
 				</div>
 				
-				<div class="he_main" v-for="i,index in he" @click="heightLinght($event)">
+				<div class="he_main" v-for="i,index in he" @click="heightLinght($event)" :key="index">
 				      <md-button>
 				      	<span>{{index+4}}</span><br />
 						<span>奖励{{i}}积分</span>
@@ -68,7 +68,7 @@
 					<p style="font-size: 0.4rem;color:#48b892;"><span class="jian">三同号</span>  猜中豹子号(三个相同号)</p>
 				</div>
 				<div class="san_main">
-					<div v-for="i,index in 6">
+					<div v-for="i,index in 6" :key="index">
 						<md-button>
 					      	<span>{{index+1}}{{index+1}}{{index+1}}</span><br />
 							<span>奖励240积分</span>
@@ -98,7 +98,7 @@
 				
 				<div class="ertong_main">
 					<p style="color:#48b892;text-align: center;font-size: 0.4rem;">同号</p>
-					<div v-for="i,index in 6">
+					<div v-for="i,index in 6" :key="index">
 						<md-button>
 					      	<span>{{index+1}}{{index+1}}</span>
 				      	</md-button>
@@ -106,7 +106,7 @@
 				</div>
 				<div class="ertong_main">
 					<p style="color:#48b892;text-align: center;font-size: 0.4rem;margin: 0.2rem;">不同号</p>
-					<div v-for="i,index in 6">
+					<div v-for="i,index in 6" :key="index">
 						<md-button>
 					      	<span>{{index+1}}</span>
 				      	</md-button>
@@ -118,7 +118,7 @@
 						<p style="font-size: 0.4rem;color:#48b892;"><span class="san_jian">二同号复选</span>  猜开奖中的2个指定的相同号码，奖励15积分</p>
 				</div>
 				<div class="ertong_main">
-					<div v-for="i,index in 8">
+					<div v-for="i,index in 8" :key="index">
 						<md-button>
 					      	<span>{{index+1}}{{index+1}}*</span>
 				      	</md-button>
@@ -134,7 +134,7 @@
 				</div>
 				
 				<div class="ertong_main">
-					<div v-for="i,index in 6">
+					<div v-for="i,index in 6" :key="index">
 						<md-button>
 					      	<span>{{index+1}}</span>
 				      	</md-button>
@@ -160,7 +160,7 @@
 				</div>
 				
 				<div class="ertong_main">
-					<div v-for="i,index in 6">
+					<div v-for="i,index in 6" :key="index">
 						<md-button>
 					      	<span>{{index+1}}</span>
 				      </md-button>
@@ -192,7 +192,7 @@
 			</table>
 			<div style="height: 12.3rem; overflow-y: auto;">
 				<table class="table-body"  >
-				<tr v-for="i in 23">
+				<tr v-for="i in 23" :key="index">
 					<td><span>{{i}}期</span></td>
 					<td><span>123</span></td>
 					<td><span>小</span></td>
