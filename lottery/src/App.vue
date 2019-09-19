@@ -8,9 +8,8 @@
 export default {
   created() {
     this.$axios
-      .get("http://elm.cangdu.org/v1/pois?type=nearby", {
+      .get("/users/sss", {
         params: {
-          keyword: '北京'
         }
       })
       .then(data => {
