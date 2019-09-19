@@ -5,7 +5,7 @@ import store from './store'
 import 'lib-flexible/flexible'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-
+import IconFont from '../src/assets/iconfont/iconfont.css' 
 Vue.config.productionTip = false
 
 Vue.use(VueAxios,axios)
@@ -18,5 +18,6 @@ new Vue({
   store,
   axios,
   VueAxios,
+  IconFont,
   render: h => h(App)
 }).$mount('#app')
