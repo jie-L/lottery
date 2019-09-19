@@ -5,6 +5,19 @@ import store from './store'
 import 'lib-flexible/flexible'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import IconFont from '../src/assets/iconfont/iconfont.css' 
+
+
+import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+
+Vue.use(MdButton)
+Vue.use(MdContent)
+Vue.use(MdTabs)
+
+
+
 
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
@@ -23,5 +36,6 @@ new Vue({
   store,
   axios,
   VueAxios,
+  IconFont,
   render: h => h(App)
 }).$mount('#app')

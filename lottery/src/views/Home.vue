@@ -69,7 +69,6 @@
 		width:100%;
 		height: 100%;
 		border-radius: 50%;
-
 	}
 	.firend{
 		text-align: center;
@@ -104,7 +103,6 @@
 	.sort .item{
 		width:33.33%;
 		padding: 0.2rem 0;
-
 	}
 	.money p{
 		font-size: .3rem;
@@ -143,7 +141,6 @@
 	}
 	.money p a {
 		color: #fff;
-
 	}
 	.login{
 		position: absolute;
