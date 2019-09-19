@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .content>div {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        span {
+            width: 120px;
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <div class="content">
+            <div>
+                <span>期数</span><span>时间</span><span>奖号</span>
+                <span>和值</span><span>三同号</span><span>二同号</span>
+                <span>三不同</span><span>二不同</span><span>三连号</span>
+            </div>
+            <div v-for="(i,index) in content">
+                <span v-for="(j,idx) in i">{{idx==2?j.substring(20,25):j}}</span>
+            </div>
+        </div>
+        <button @click="start()">拉取</button>
+        <button @click="stop()">停止</button>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script src="vue-resource.js"></script>
+<script>
+    new Vue({
+        el: '#box',
+        data() {
+            return {
+                content: '',
+                timer: null,
+            }
+        },
+        methods: {
+            start() {
+                this.$http.get('http://localhost:8000/kuai').then((data) => {
+                    console.log(data)
+                    this.content = eval(data.bodyText)
+                    console.log('--第1次拉取-------')
+                })
+
+                var min = 1
+                this.timer = setInterval(() => {
+                    this.$http.get('http://localhost:8000/kuai').then((data) => {
+                        console.log(data)
+                        this.content = eval(data.bodyText)
+                    })
+                    min++
+                    console.log('--第' + min + '次拉取-------')
+                }, 60000)
+            },
+            stop() {
+                clearInterval(this.timer)
+                this.timer = null
+                console.log('----------停止---')
+            }
+        },
+    })
+</script>
+
+</html>
