@@ -6,6 +6,18 @@ import 'lib-flexible/flexible'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+
+import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
+import 'vue-material/dist/vue-material.min.css'
+import 'vue-material/dist/theme/default.css'
+
+Vue.use(MdButton)
+Vue.use(MdContent)
+Vue.use(MdTabs)
+
+
+
+
 Vue.config.productionTip = false
 
 Vue.use(VueAxios,axios)
