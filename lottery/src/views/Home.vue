@@ -43,23 +43,7 @@
 		list-style: none;
 		text-decoration: none;
 	}
-	.md-icon-button{
-		height: 1rem;
-	}
-	.md-icon-button{
-		padding: 0;
-		min-height: 0;
-	}
-	.md-button .md-ripple {
-	    display: flex;
-    	justify-content: center;
-    	align-items: center;
-	}
-	.md-button .md-ripple{
-		width:1rem !important;
-		height: 1rem !important;
-		padding: 0;
-	}
+	
 	img{
 		vertical-align: top;
 	}
@@ -134,15 +118,13 @@
 		margin: 0;
 	}
 	.ani{
-		width:1rem;
-		height: 1rem;
+		width: 100%;
+		height: 100%;
 		left: 0;
-		/*top: -0.01;*/
-		/*margin-left: -.05rem;*/
-
 		position: absolute;
 	}
 	.ks-box{
+		overflow: hidden;
 		margin: 0 auto;
 		width:1rem;
 		height: 1rem ;
