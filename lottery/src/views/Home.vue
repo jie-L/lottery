@@ -25,7 +25,6 @@
 						<div class="ks-box">
 							<img :src="i.isCli?img1:img2" alt="">
 							<md-button class="ani md-icon-button md-accent">
-        						<md-icon></md-icon>
      						 </md-button>
 						</div>
 					</router-link>	
@@ -114,10 +113,8 @@
 		height: 0.8rem;
 		color: #d59b09;
 	}
-	.md-button{
-		margin: 0;
-	}
 	.ani{
+		margin: 0;
 		width: 100%;
 		height: 100%;
 		left: 0;
