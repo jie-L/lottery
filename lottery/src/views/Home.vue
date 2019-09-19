@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="login">
 				<!-- 判断点击跳转登录或者注册 -->
-				<router-link :to="isLogin?'/up':'/in'"><span @click="isLogin = false">注册</span>|<span @click="isLogin = true">登录</span></router-link>
+				<router-link to="/"><span @click="login(0)">注册</span>|<span @click="login(1)">登录</span></router-link>
 			</div>
 			<div class="tit">
 				<p class="firend"><span>{{time}}</span>好!朋友</p>
@@ -19,7 +19,7 @@
 				</div>	
 			</div>
 			<div class="sort">
-				<div class="item" v-for = "i in arr">
+				<div class="item" v-for = "i,index in arr" :key="index">
 					<!-- 判断是否可点击跳转页面 -->
 					<router-link :to="i.isCli?'/':'/'">
 						<div class="ks-box">
@@ -36,13 +36,13 @@
 </template>
 <style scoped>
 	*{
-
 		margin: 0;
 		padding: 0;
 		list-style: none;
+	}
+	a{
 		text-decoration: none;
 	}
-	
 	img{
 		vertical-align: top;
 	}
@@ -230,6 +230,19 @@
 				this.time = '晚上'
 			}else{
 				this.time = '早晨'
+			}
+		},
+		methods:{
+			login(a){
+				// console.log(a)
+				if(a==1){
+					this.isLogin = true;
+					localStorage.isLogin = this.isLogin
+					
+				}else if(a==0){
+					this.isLogin = false;
+					localStorage.isLogin = this.isLogin
+				}
 			}
 		}
 	};
