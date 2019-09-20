@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="login">
 				<!-- 判断点击跳转登录或者注册 -->
-				<router-link :to="isLogin?'Login?up':'Login?in'"><span @click="isLogin = false">注册</span>|<span @click="isLogin = true">登录</span></router-link>
+				<router-link class="LoginTo" :to="isLogin?'Login?up':'Login?in'"><span @click="isLogin = false">注册</span><span>|</span><span @click="isLogin = true">登录</span></router-link>
 			</div>
 			<div class="tit">
 				<p class="firend"><span>{{time}}</span>好!朋友</p>
@@ -153,6 +153,7 @@
 	}
 	.login a span{
 		margin: 0 .03rem;
+		color: #fff
 	}  
 	.clearfix:after,
 	.clearfix:before{content: '';display: table;}
