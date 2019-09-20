@@ -15,7 +15,7 @@
 				</div>
 				<div class="money clearfix">
 					<div><p><span>{{mod}}</span>模拟金</p></div>
-					<div><p><span>{{soc}}</span>积分 <router-link to="/">兑换</router-link></p></div>
+					<div><p><span>{{soc}}</span>积分 <router-link to="shop">兑换</router-link></p></div>
 				</div>	
 			</div>
 			<div class="sort">
@@ -111,6 +111,10 @@
 		height: 0.8rem;
 		color: #d59b09;
 	}
+	.login a:hover,.money a:hover{
+		text-decoration: none;
+		color: #fff;
+	}
 	.ani{
 		margin: 0;
 		width: 100%;
@@ -153,7 +157,7 @@
 	}
 	.login a span{
 		margin: 0 .03rem;
-		color: #fff
+		color: #fff;
 	}  
 	.clearfix:after,
 	.clearfix:before{content: '';display: table;}
@@ -164,7 +168,7 @@
 		data () {
 		  return {
 		  	isLogin:true,
-		  	time:'',
+		  	time:'早上',
 		  	hour:0,
 		  	mod:1420,
 		  	soc:2,
@@ -215,20 +219,32 @@
 			]
 		  };
 		},
-		created(){
-			var tim = new Date()
-			this.hour = tim.getHours()
-			if (this.hour > 6 && this.hour <=10) {
-				this.time = '上午'
-			}else if(this.hour > 10 && this.hour <= 14){
-				this.time = '中午'
-			}else if(this.hour > 14 && this.hour <= 18){
-				this.time = '下午'
-			}else if(this.hour > 18 && this.hour <= 24){
-				this.time = '晚上'
-			}else{
-				this.time = '早晨'
+		methods:{
+			getTime(){
+				var tim = new Date();
+				this.hour = tim.getHours();
+				console.log(this.hour)
+				if (this.hour >= 4 && this.hour < 6){
+					this.time = '早上';
+				}else if (this.hour >= 6 && this.hour <10) {
+					this.time = '上午';
+				}else if(this.hour >= 10 && this.hour < 14){
+					this.time = '中午';
+				}else if(this.hour >= 14 && this.hour < 18){
+					this.time = '下午';
+				}else if(this.hour >= 18 && this.hour < 20){
+					this.time = '傍晚';
+				}else {
+					this.time = '晚上';
+				}
 			}
+		},
+		created(){
+			this.getTime()
+			var _this = this
+			setInterval(function(){
+				_this.getTime()
+			},60000)
 		},
 	};
 </script>
