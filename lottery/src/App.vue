@@ -8,7 +8,7 @@
 export default {
   created() {
     this.$axios
-      .get("/users/sss", {
+      .get("/index/kuai", {
         params: {
         }
       })
