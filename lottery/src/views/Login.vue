@@ -1,6 +1,6 @@
 <template>
   <div id="login_up" style="height:100%">
-		<div class="login_bigbox" style="width:10rem;background-color:#08533c;height:100%;">
+		<div class="login_bigbox" style="width:10rem;background-color:#08533c;">
 			<div style="height:100%;">
 				<div class="login">
           <div v-if="type"><h2 >登录</h2></div>
@@ -9,8 +9,13 @@
 				<div>
 					<div class="login_top">
 						<div class="touxiangimgs">
+<<<<<<< HEAD
 							<img class="touxiangimg" :src="url">
 							<input class="file_in" type="file" @change="btn($event)">
+=======
+							<div class="touxiangimg"><img :src="url"></div>
+							<input class="file_in" type="file">
+>>>>>>> 09ba94bb5c61ea29458fd277f63dd4bed07b45d4
 						</div>
 						<div class="zc_box">
 							<label for="">账号：
@@ -85,9 +90,14 @@ export default {
 </script>
 
 <style scoped>
+input{
+  outline: none;
+  border:none;
+}
 *{
   margin: 0;padding: 0;
 }
+
 .login{
   padding-top:0.3rem; 
   text-align: center;
@@ -108,10 +118,16 @@ export default {
   width: 1.6rem;
   height:1.6rem;
   border-radius: 50%;
-  display: block;
   margin: 0.3rem auto;
   position: relative;
 }
+.touxiangimg{
+  width:100%;
+  height: 100%;
+  border: solid 1px #000;
+  border-radius: 50%;
+}
+
 .file_in{
   width: 1.6rem;
   height:1.6rem;
@@ -127,8 +143,16 @@ export default {
   height:1.6rem;
   border: solid 1px #000;
   border-radius: 50%;
-  position:absolute;
-  left:0;top:0;
+  /*position:absolute;
+  left:0;top:0;*/
+}
+.touxiangimg img{
+  width:100%;
+  height: 100%;
+  border-radius: 50%;
+}
+img[src=""],img:not([src]){
+  display: none;
 }
 .zc_box{
   width:8rem;
