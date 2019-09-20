@@ -41,7 +41,7 @@
 				</button>
 			</div>
 			<!--问号跳转-->
-			<div class="wenhao">?</div>
+			<router-link to="/help"><div class="wenhao">?</div></router-link>
 		</div>
 		<!--彩票选项-->
 		
@@ -215,7 +215,7 @@
 			<div style="width:7.6rem;float: left;text-align: center;">
 				共0注 <span style="color:#ffc107 ;">0模拟金</span>
 			</div>
-			<div class="que">确定</div>
+			<router-link style="color:#fff" to="/tickets"><div class="que">确定</div></router-link>
 		</footer>
 	</div>
 </template>
