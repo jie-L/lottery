@@ -15,7 +15,7 @@
 				</div>
 				<div class="money clearfix">
 					<div><p><span>{{mod}}</span>模拟金</p></div>
-					<div><p><span>{{soc}}</span>积分 <router-link to="/">兑换</router-link></p></div>
+					<div><p><span>{{soc}}</span>积分 <router-link to="/shop">兑换</router-link></p></div>
 				</div>	
 			</div>
 			<div class="sort">

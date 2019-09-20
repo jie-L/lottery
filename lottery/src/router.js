@@ -5,6 +5,7 @@ import Shop from './views/Shop.vue'
 import Help from './views/Help'
 import Tickets from './views/Tickets'
 import lotteryHall from './views/lotteryHall.vue'
+import Login from './views/Login.vue'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       path: '/tickets',
       name: 'tickets',
       component: Tickets
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login
     }
   ]
 })
