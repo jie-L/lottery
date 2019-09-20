@@ -15,13 +15,13 @@
 				</div>
 				<div class="money clearfix">
 					<div><p><span>{{mod}}</span>模拟金</p></div>
-					<div><p><span>{{soc}}</span>积分 <router-link to="shop">兑换</router-link></p></div>
+					<div><p><span>{{soc}}</span>积分 <router-link to="/shop">兑换</router-link></p></div>
 				</div>	
 			</div>
 			<div class="sort">
-				<div class="item" v-for = "i,index in arr" :key="index">
+				<div class="item" v-for = "(i,index) in arr" :key="index">
 					<!-- 判断是否可点击跳转页面 -->
-					<router-link :to="i.isCli?'/':'/'">
+					<router-link :to="i.isCli?'/lotteryHall':'/'">
 						<div class="ks-box">
 							<img :src="i.isCli?img1:img2" alt="">
 							<md-button class="ani md-icon-button md-accent">

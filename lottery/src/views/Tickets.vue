@@ -3,7 +3,7 @@
       <div class="main">
           <!-- 点击跳转页面 @click -->
         <button class="btn">
-              <i class="iconfont">&#xe62a;</i> <span>继续选号</span>
+              <i class="iconfont">&#xe62a;</i> <router-link to="/lotteryHall"><span>继续选号</span></router-link>
         </button>
         <div class="order">
             <div class="imgTop">

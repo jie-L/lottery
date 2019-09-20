@@ -41,7 +41,7 @@
 				</button>
 			</div>
 			<!--问号跳转-->
-			<div class="wenhao">?</div>
+			<router-link to="/help"><div class="wenhao">?</div></router-link>
 		</div>
 		<!--彩票选项-->
 		
@@ -215,7 +215,7 @@
 			<div style="width:7.6rem;float: left;text-align: center;">
 				共0注 <span style="color:#ffc107 ;">0模拟金</span>
 			</div>
-			<div class="que">确定</div>
+			<router-link style="color:#fff" to="/tickets"><div class="que">确定</div></router-link>
 		</footer>
 	</div>
 </template>
@@ -257,12 +257,17 @@
 		},
 		methods: {
 			heightLinght(evt){
-				console.log(evt.path[1])
-				if((evt.path[1].className=='')){
-					evt.path[1].className='active_bor_bkd_clo'
-				}else{
-					evt.path[1].className=''
+				console.log(evt.path)
+				for(var i=0;i<evt.path.length;i++){
+					if(evt.path[i].localName=='button'){
+						if((evt.path[i].className=='')){
+							evt.path[i].className='active_bor_bkd_clo'
+						}else{
+							evt.path[i].className=''
+						}
+					}
 				}
+				
 			},
 			
 			
@@ -284,7 +289,7 @@
 			      }
 			      let currPointX = e.changedTouches[0].pageX;
 			      let leftSlide = this.startPointX-currPointX;
-			      if(leftSlide>30&&this.showIndex<this.imgSrc.length-1){
+			      if(leftSlide&&this.showIndex<this.imgSrc.length-1){
 			        this.show(++this.showIndex)
 			        this.type=false
 			      }else if(leftSlide<-30&&this.showIndex>0){
@@ -358,15 +363,28 @@
 		    minute() {
 		      return this.num(this.minutes);
 		    }
+		},
+		created() {
+			this.$axios
+			.get("/index/kuai", {
+				params: {
+				}
+			})
+			.then(data => {
+				console.log(data);
+			});
 		}
 	}
 </script>
 
 <style scoped>
 	/*点击*/
-/*.active_bor_bkd_clo{
+/* .active_bor_bkd_clo{
+	margin-top: 0.12rem !important;
+	margin-bottom: 0.1rem !important;
+	margin-left: 0.26rem !important;
 	background: yellow !important;
-}*/
+} */
 
 
 	small {
