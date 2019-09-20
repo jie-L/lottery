@@ -9,6 +9,9 @@ var cheerio = require("cheerio");
 var server = require("./curl");
 var url = "https://kuai3.cjcp.com.cn/beijing/"
 
+router.get('/aaa',(req,res)=>{
+	res.send('123')
+})
 
 router.get('/kuai',(req,res)=>{
   server.download(url, function(data) {

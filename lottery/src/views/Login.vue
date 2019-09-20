@@ -10,7 +10,7 @@
 					<div class="login_top">
 						<div class="touxiangimgs">
 							<img class="touxiangimg" :src="url">
-							<input class="file_in" type="file">
+							<input class="file_in" type="file" @change="btn($event)">
 						</div>
 						<div class="zc_box">
 							<label for="">账号：
@@ -49,14 +49,36 @@ export default {
     
    }
  },
+ methods:{
+ 	//          头像
+			btn($event){
+				var f = $event.target.files[0]
+				var d = new FormData
+				d.append('img',f)
+				this.$http.post('/filess/file',d,{
+				}).then((data)=>{
+					console.log(data)
+					this.url= 'http://localhost:8000/img/'+data.data
+					
+				},(err)=>{
+					console.log(err)
+				})
+//					this.$axios
+//					.get("/filess/aaa", {
+//						params: {
+//						}
+//					})
+//					.then(data => {
+//						console.log(data);
+//					});
+			}
+ },
  created(){
    if(location.href.split('?')[1]=='in'){
      this.type=false
-     console.log(this.type)
    }
    if(location.href.split('?')[1]=='up'){
      this.type=true
-     console.log(this.type)
    }
  },
 };
