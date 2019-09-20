@@ -20,13 +20,15 @@
         <div style="width:10rem;position:relative;overflow:hidden;height:13rem">
           <div
             class="outNode"
-            style="width:20rem;height:13rem;position:absolute;top:0.15rem;left:0" @touchmove="touchmove" @touchstart="touchstart">
+            style="width:20rem;height:13rem;position:absolute;top:0.15rem;left:0"
+            @touchmove="touchmove"
+            @touchstart="touchstart"
+          >
             <div class="item" style="width:10rem;float:left">
               <div class="list1" style="width:50%;float:left;background:white;margin-top:0.0581rem">
                 <div class="item-img">
                   <img
                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546077945538&di=003d3de1479ae95ab6131ca11d042c4a&imgtype=0&src=http%3A%2F%2Fa.vpimg3.com%2Fupload%2Fmerchandise%2Fpdcvis%2F146767%2F2017%2F1104%2F115%2F88257c95-7205-4390-8eab-635fc8384069_t.jpg"
-                    style="width:2.688rem;height:3.3rem"
                     alt
                   />
                 </div>
@@ -38,7 +40,7 @@
                 <div class="item-img">
                   <img
                     src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546077790483&di=716de166c55fe352462ca970809e926f&imgtype=0&src=http%3A%2F%2Fi1.hexunimg.cn%2F2016-03-15%2F182772684.jpg"
-                    style="width:3.2rem;height:2.1rem;padding-top:1rem"
+                    style="padding-top:1rem;padding-bottom:0.67rem;"
                     alt
                   />
                 </div>
@@ -98,13 +100,9 @@ export default {
     return {
       type: true,
       startPointX: 0,
-          changePointX: 0,
-          showIndex: 0,
-          imgSrc:[
-            '1',
-            '2',
-          ],
-
+      changePointX: 0,
+      showIndex: 0,
+      imgSrc: ["1", "2"]
     };
   },
   methods: {
@@ -147,13 +145,6 @@ export default {
 };
 </script>
 <style>
-/* .v-enter-active, .v-leave-active {
-    transform: translateX(-10rem);
-    transition:0.5s
-}
-.v-enter, .v-leave-to  {
-    opacity: 0;
-} */
 * {
   margin: 0;
   padding: 0;
@@ -175,6 +166,7 @@ export default {
 } */
 .item p {
   text-align: center;
+  color: #807474;
 }
 .Shoppingpointsexchange {
   width: 10rem;

@@ -2,7 +2,8 @@
 	<div class="box">
 		<div class="container">
 			<div class="login">
-				<router-link to="/one"><span>注册</span>|<span>登录</span></router-link>
+				<!-- 判断点击跳转登录或者注册 -->
+				<router-link class="LoginTo" :to="isLogin?'Login?up':'Login?in'"><span @click="isLogin = false">注册</span><span>|</span><span @click="isLogin = true">登录</span></router-link>
 			</div>
 			<div class="tit">
 				<p class="firend"><span>{{time}}</span>好!朋友</p>
@@ -13,18 +14,21 @@
 					<p>用户名</p>
 				</div>
 				<div class="money clearfix">
-					<div><p><span>0</span>模拟金</p></div>
-					<div><p><span>0</span>积分 <router-link to="./">兑换</router-link></p></div>
+					<div><p><span>{{mod}}</span>模拟金</p></div>
+					<div><p><span>{{soc}}</span>积分 <router-link to="/shop">兑换</router-link></p></div>
 				</div>	
 			</div>
 			<div class="sort">
-				<div class="item" v-for = "i in arr">
-					<router-link to="/">
+				<div class="item" v-for = "i,index in arr" :key="index">
+					<!-- 判断是否可点击跳转页面 -->
+					<router-link :to="i.isCli?'/':'/'">
 						<div class="ks-box">
 							<img :src="i.isCli?img1:img2" alt="">
+							<md-button class="ani md-icon-button md-accent">
+     						 </md-button>
 						</div>
-						<p class="name">{{i.name}}</p>
 					</router-link>	
+					<p class="name">{{i.name}}</p>
 				</div>
 			</div>
 		</div>
@@ -35,6 +39,8 @@
 		margin: 0;
 		padding: 0;
 		list-style: none;
+	}
+	a{
 		text-decoration: none;
 	}
 	img{
@@ -49,14 +55,16 @@
 		margin: 0 auto;
 	}
 	.tit{
+		padding-top: .2rem;
 		background: #08533c;
 	}
 	.header-img{
-		width:1rem;
-		height: 1rem;
+		width:1.3rem;
+		height: 1.3rem;
 		margin: 0 auto;
 		border-radius: 50%;
 	}
+
 	.header-img img{
 		width:100%;
 		height: 100%;
@@ -65,16 +73,17 @@
 	.firend{
 		text-align: center;
 		color: #fff;
-		font-size: 0.35rem;
-		line-height: .8rem;
-		height: .8rem;
+		font-weight: 700;
+		font-size: 0.6rem;
+		line-height: 1.15rem;
+		height: 1.15rem;
 	}
 	.username{
 		text-align: center;
 		color: #fff;
-		height: .6rem;
-		line-height: .6rem;
-		font-size: .3rem;
+		height: .8rem;
+		line-height: .8rem;
+		font-size: .4rem;
 		margin-bottom: .25rem;
 	}
 	.money{
@@ -92,21 +101,30 @@
 		display: flex;
 	}
 	.sort .item{
-		width:25%;
+		width:33.33%;
 		padding: 0.2rem 0;
 	}
 	.money p{
-		font-size: .25rem;
+		font-size: .3rem;
 		text-align: center;
-		line-height: 0.625rem;
-		height: 0.625rem;
+		line-height: 0.8rem;
+		height: 0.8rem;
 		color: #d59b09;
 	}
+	.ani{
+		margin: 0;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		position: absolute;
+	}
 	.ks-box{
+		overflow: hidden;
 		margin: 0 auto;
-		width:.6rem;
-		height: .6rem;
+		width:1rem;
+		height: 1rem ;
 		border-radius: 50%;
+		position: relative;
 	}
 	.ks-box img{
 		vertical-align: top;
@@ -115,10 +133,10 @@
 		height: 100%;
 	}
 	.name{
-		height: 0.5rem;
-		line-height: 0.5rem;
-		font-size: 0.15rem;
-		color: #fff;
+		height: 1rem;
+		line-height: 1rem;
+		font-size: 0.35rem;
+		color: #48b892;
 		text-align: center;
 	}
 	.money p a {
@@ -127,14 +145,15 @@
 	.login{
 		position: absolute;
 		right: .6rem;
-		font-size: .3rem;
-		top:0.2rem;
+		font-size: .35rem;
+		top:0.6rem;
 	}
 	.login a {
 		color: #fff;
 	}
 	.login a span{
 		margin: 0 .03rem;
+		color: #fff
 	}  
 	.clearfix:after,
 	.clearfix:before{content: '';display: table;}
@@ -144,8 +163,11 @@
 	export default {
 		data () {
 		  return {
+		  	isLogin:true,
 		  	time:'',
 		  	hour:0,
+		  	mod:1420,
+		  	soc:2,
 		  	img1:'http://haoxg.xyz/lottery/img/happyk3.ea0489f1.png',
 		  	img2:'http://haoxg.xyz/lottery/img/k31.f388457f.jpg',
 		    arr:[
@@ -207,6 +229,6 @@
 			}else{
 				this.time = '早晨'
 			}
-		}
+		},
 	};
 </script>
