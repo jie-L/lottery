@@ -9,7 +9,7 @@
 				<div>
 					<div class="login_top">
 						<div class="touxiangimgs">
-							<img class="touxiangimg" :src="url">
+							<div class="touxiangimg"><img :src="url" style="display: inline-block;width: 100%;height: 100%;"></div>
 							<input class="file_in" type="file" @change="btn($event)">
 						</div>
 						<div class="zc_box">
@@ -131,8 +131,7 @@ input{
   border-radius: 50%;
   opacity: 0;
   position:absolute;
-  left:0;top:0;
-  z-index: 5
+  left:0;top:0
 }
 .touxiangimg{
   width: 1.6rem;

@@ -8,7 +8,6 @@
       <div>
         <p class="title_text">据01期截止</p>
         <times></times>
-        <!-- <p>{{minute}}:{{second}}</p> -->
       </div>
     </header>
     <div class="nav">
