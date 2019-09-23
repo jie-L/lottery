@@ -21,7 +21,7 @@
 			<div class="sort">
 				<div class="item" v-for = "(i,index) in arr" :key="index">
 					<!-- 判断是否可点击跳转页面 -->
-					<router-link :to="i.isCli?'/lotteryHall':'/'">
+					<router-link :to="i.isCli?'/lotteryHall?'+i.add:'/'">
 						<div class="ks-box">
 							<img :src="i.isCli?img1:img2" alt="">
 							<md-button class="ani md-icon-button md-accent">
@@ -177,44 +177,57 @@
 		    arr:[
 			    {
 			    	isCli:true,
-			    	name:'河北快三'
+			    	name:'河北快三',
+			    	add:'hebei'
 			    },{
 			    	
 			    	isCli:false,
-			    	name:'安徽快三'
+			    	name:'安徽快三',
+			    	add:'anhui'
 			    },{
 			    	isCli:false,
-			    	name:'江苏快三'
+			    	name:'江苏快三',
+			    	add:'jiangsu'
 			    },{
 			    	isCli:false,
-			    	name:'江西快三'
+			    	name:'江西快三',
+			    	add:'jiangxi'
 			    },{
 			    	isCli:false,
-			    	name:'内蒙古快三'
+			    	name:'内蒙古快三',
+			    	add:'neimeng'
 			    },{
 			    	isCli:false,
-			    	name:'吉林快三'
+			    	name:'吉林快三',
+			    	add:'jilin'
 			    },{
 			    	isCli:false,
-			    	name:'湖北快三'
+			    	name:'湖北快三',
+			    	add:'hubei'
 			    },{
 			    	isCli:false,
-			    	name:'贵州快三'
+			    	name:'贵州快三',
+			    	add:'guizhou'
 			    },{
 			    	isCli:false,
-			    	name:'广西快三'
+			    	name:'广西快三',
+			    	add:'guangxi'
 			    },{
 			    	isCli:false,
-			    	name:'甘肃快三'
+			    	name:'甘肃快三',
+			    	add:'gansu'
 			    },{
 			    	isCli:false,
-			    	name:'福建快三'
+			    	name:'福建快三',
+			    	add:'fujian'
 			    },{
 			    	isCli:false,
-			    	name:'北京快三'
+			    	name:'北京快三',
+			    	add:'beijing'
 			    },{
 			    	isCli:false,
-			    	name:'上海快三'
+			    	name:'上海快三',
+			    	add:'shanghai'
 			    }
 			]
 		  };
