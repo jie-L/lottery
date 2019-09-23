@@ -9,13 +9,8 @@
 				<div>
 					<div class="login_top">
 						<div class="touxiangimgs">
-<<<<<<< HEAD
 							<img class="touxiangimg" :src="url">
 							<input class="file_in" type="file" @change="btn($event)">
-=======
-							<div class="touxiangimg"><img :src="url"></div>
-							<input class="file_in" type="file">
->>>>>>> 09ba94bb5c61ea29458fd277f63dd4bed07b45d4
 						</div>
 						<div class="zc_box">
 							<label for="">账号：
@@ -113,6 +108,7 @@ input{
 .login_bigbox{
   box-sizing: border-box;
   padding-top: 3rem;
+  height: 100%;
 }
 .touxiangimgs{
   width: 1.6rem;
@@ -151,7 +147,7 @@ input{
   height: 100%;
   border-radius: 50%;
 }
-img[src=""],img:not([src]){
+img:not([src]){
   display: none;
 }
 .zc_box{

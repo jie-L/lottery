@@ -8,7 +8,6 @@ const fs =require('fs')
 var cheerio = require("cheerio");
 var server = require("./curl");
 var url = "https://kuai3.cjcp.com.cn/beijing/"
-
 router.get('/aaa',(req,res)=>{
 	res.send('123')
 })

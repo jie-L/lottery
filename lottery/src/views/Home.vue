@@ -223,7 +223,7 @@
 			getTime(){
 				var tim = new Date();
 				this.hour = tim.getHours();
-				console.log(this.hour)
+				// console.log(this.hour)
 				if (this.hour >= 4 && this.hour < 6){
 					this.time = '早上';
 				}else if (this.hour >= 6 && this.hour <10) {
