@@ -9,18 +9,18 @@
 				<div>
 					<div class="login_top">
 						<div class="touxiangimgs">
-							<div class="touxiangimg"><img :src="url" style="display: inline-block;width: 100%;height: 100%;"></div>
+							<div class="touxiangimg"><img :src="login_up.img_url" v-show="imgUrl" style="display: inline-block;width: 100%;height: 100%;"></div>
 							<input class="file_in" type="file" @change="btn($event)">
 						</div>
 						<div class="zc_box">
 							<label for="">账号：
-                <input type="text" v-model="login_in.account">
+                <input type="text" v-model="login_up.account" @input="input">
               </label>
               <label for="">密码：
-                <input type="text" v-model="login_in.password">
+                <input type="password" v-model="login_up.password" @input="input">
               </label>
 
-							<button class="surebtn">确定</button>
+							<button class="surebtn" :class="{active:bga}" @click="Determine">确定</button>
 						</div>
 					</div>
 				</div>
@@ -40,8 +40,9 @@ export default {
   data(){
    return{
      type:true,
-     url:'',
-     login_in:{
+     bga:false,
+     imgUrl:false,
+     login_up:{
        account:'',
        password:'',
        img_url:''
@@ -49,7 +50,52 @@ export default {
     
    }
  },
+ created(){
+   if(localStorage.url){
+     this.login_up.img_url = localStorage.url
+   }else{
+     this.login_up.img_url ='https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2114264504,4025672769&fm=26&gp=0.jpg'
+   }
+ },
  methods:{
+   Determine() {
+      if(this.type){
+        // 登录
+      this.$axios
+        .post("/users/in", this.login_up)
+        .then(res => {
+          if(res.data.type =='yes'){
+            location.href ='/'
+          }
+          alert(res.data.data);
+        })
+        .catch(res => {
+          console.log(err);
+        });
+      }else{
+        //  注册
+      this.$axios
+        .post("/users/up", this.login_up)
+        .then(res => {
+          if (res.data.type == "yes") {
+            this.type = true;
+          }
+          alert(res.data.data);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      
+      }
+      
+    },
+    input(){
+      if(this.login_up.account !='' && this.login_up.password !=''){
+        this.bga = true
+      }else{
+        this.bga = false
+      }
+    },
  	//          头像
 			btn($event){
 				var f = $event.target.files[0]
@@ -57,12 +103,13 @@ export default {
 				d.append('img',f)
 				this.$http.post('/filess/file',d,{
 				}).then((data)=>{
-					console.log(data)
-					this.url= 'http://localhost:8000/img/'+data.data
-					
+					console.log(data.data)
+          this.login_up.img_url= 'http://localhost:8000/img/'+data.data
+          this.imgUrl = true
+          localStorage.url = this.login_up.img_url
 				},(err)=>{
 					console.log(err)
-				})
+        })
 //					this.$axios
 //					.get("/filess/aaa", {
 //						params: {
@@ -130,7 +177,7 @@ input{
   border-radius: 50%;
   opacity: 0;
   position:absolute;
-  left:0;top:0
+  left:0;top:0;
 }
 .touxiangimg{
   width: 1.6rem;
@@ -191,5 +238,8 @@ img[src=""],img:not([src]){
   font-size: 0.5rem;
   margin-left: 0.3rem;
   color: aliceblue;
+}
+.active{
+  background: #3377ff;
 }
 </style>
