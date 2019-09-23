@@ -8,7 +8,7 @@
 			<div class="tit">
 				<p class="firend"><span>{{time}}</span>好!朋友</p>
 				<div class="header-img">
-					<img src="../assets/img/tx.png" alt="">
+					<img :src="lSimg" alt="">
 				</div>
 				<div class="username">
 					<p>用户名</p>
@@ -167,6 +167,7 @@
 	export default {
 		data () {
 		  return {
+			lSimg:localStorage.url,
 		  	isLogin:true,
 		  	time:'早上',
 		  	hour:0,
@@ -250,7 +251,7 @@
 				}else {
 					this.time = '晚上';
 				}
-			}
+			},
 		},
 		created(){
 			this.getTime()
