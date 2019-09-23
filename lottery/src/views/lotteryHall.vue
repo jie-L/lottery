@@ -51,10 +51,12 @@
 					<p style="font-size: 0.4rem;color:#48b892;"><span class="jian">和值</span>  猜开奖号码相加的和</p>
 				</div>
 				
-				<div class="he_main" v-for="(i,index) in he" @click="heightLinght($event)" :key="index">
+				<div class="btns" v-for="(i,index) in he" @click="btns($event)" :key="index">
 				      <md-button>
-				      	<span>{{index+4}}</span><br />
-						<span>奖励{{i}}积分</span>
+				      	<dl>
+							<dt>{{index+4}}</dt>
+							<dd style="font-size:.2rem">奖励{{i}}积分</dd>
+						</dl>
 				      </md-button>
 				 </div>
 			</div>
@@ -67,11 +69,13 @@
 				<div style="margin-bottom: 0.2rem;">
 					<p style="font-size: 0.4rem;color:#48b892;"><span class="jian">三同号</span>  猜中豹子号(三个相同号)</p>
 				</div>
-				<div class="san_main">
-					<div v-for="(i,index) in 6" :key="index">
+				<div>
+					<div class="btns" v-for="(i,index) in 6" :key="index" @click="btns($event)">
 						<md-button>
-					      	<span>{{index+1}}{{index+1}}{{index+1}}</span><br />
-							<span>奖励240积分</span>
+							<dl>
+					      		<dt>{{index+1}}{{index+1}}{{index+1}}</dt>
+								<dd style="font-size:.2rem">奖励240积分</dd>
+							</dl>
 				      	</md-button>
 					</div>
 				</div>
@@ -79,14 +83,14 @@
 				<div style="margin-bottom: 0.2rem;margin-top: 5rem;">
 					<p style="font-size: 0.4rem;color:#48b892;"><span class="san_jian">三同号通选</span>  猜中豹子号(三个相同号)</p>
 				</div>
-				<div class="san_main2">
-					<div>
-						<md-button>
-					      	<span>三同号通选</span><br />
-							<span>奖励240积分</span>
-				      	</md-button>
+				<!--<div class="san_main2">-->
+					<div class="btns" style="width:100%">
+					     <dl style="width:auto;text-align:center">
+							<dt>三同号通选</dt>
+							<dd>任意一个豹子号开出即中40积分</dd>
+						</dl>
 					</div>
-				</div>
+				<!--</div>-->
 			</div>
 			
 		<!--二同号-->
@@ -96,19 +100,23 @@
 					<p style="font-size: 0.4rem;color:#48b892;"><span class="san_jian">二同号单选</span>  选择同号和不同号的组合，奖励80积分</p>
 				</div>
 				
-				<div class="ertong_main">
+				<div class="T">
 					<p style="color:#48b892;text-align: center;font-size: 0.4rem;">同号</p>
-					<div v-for="(i,index) in 6" :key="index">
+					<div class="btns" v-for="(i,index) in 6" :key="index" @click="btns($event,$index)">
 						<md-button>
-					      	<span>{{index+1}}{{index+1}}</span>
+							<dl>
+								<dt style="line-height:.6rem;">{{index+1}}{{index+1}}</dt>
+							</dl>
 				      	</md-button>
 					</div>
 				</div>
-				<div class="ertong_main">
+				<div class="B">
 					<p style="color:#48b892;text-align: center;font-size: 0.4rem;margin: 0.2rem;">不同号</p>
-					<div v-for="(i,index) in 6" :key="index">
+					<div v-for="(i,index) in 6" :key="index" class="btns"  @click="btns($event,$index)">
 						<md-button>
-					      	<span>{{index+1}}</span>
+							<dl>
+								<dt style="line-height:.6rem;">{{index+1}}</dt>
+							</dl>
 				      	</md-button>
 					</div>
 				</div>
@@ -118,9 +126,11 @@
 						<p style="font-size: 0.4rem;color:#48b892;"><span class="san_jian">二同号复选</span>  猜开奖中的2个指定的相同号码，奖励15积分</p>
 				</div>
 				<div class="ertong_main">
-					<div v-for="(i,index) in 8" :key="index">
+					<div v-for="(i,index) in 8" :key="index" class="btns" @click="btns($event)">
 						<md-button>
-					      	<span>{{index+1}}{{index+1}}*</span>
+							<dl>
+								<dt style="line-height:.6rem;">{{index+1}}{{index+1}}*</dt>
+							</dl>
 				      	</md-button>
 					</div>
 				</div>
@@ -134,9 +144,11 @@
 				</div>
 				
 				<div class="ertong_main">
-					<div v-for="(i,index) in 6" :key="index">
+					<div v-for="(i,index) in 6" :key="index" class="btns" @click="btns($event)">
 						<md-button>
-					      	<span>{{index+1}}</span>
+							<dl>
+								<dt style="line-height:.6rem">{{index+1}}</dt>
+							</dl>
 				      	</md-button>
 					</div>
 				</div>
@@ -144,13 +156,13 @@
 				<div style="margin-bottom: 0.2rem;margin-top: 4rem;">
 					<p style="font-size: 0.4rem;color:#48b892;"><span class="san_jian">三连号</span> 123,234,345,456,任一开出即中10积分</p>
 				</div>
-				<div class="santong_main">
-					<div>
-						<md-button>
-					      	<span>三连号通选</span>
-				      	</md-button>
+				<!--<div class="santong_main">-->
+					<div class="btns" style="width:100%">
+							<dl style="width:auto;text-align:center">
+								<dt style="line-height:.6rem">三连号通选</dt>
+							</dl>
 					</div>
-				</div>
+				<!--</div>-->
 			</div>
 		<!--二不同-->
 			<div v-else-if="playmains[4]">
@@ -159,13 +171,15 @@
 					<p style="font-size: 0.4rem;color:#48b892;"><span class="san_jian">二不同号</span>  猜开奖的2个指定的不同号码，奖励8积分</p>
 				</div>
 				
-				<div class="ertong_main">
-					<div v-for="(i,index) in 6" :key="index">
+				<!--<div class="ertong_main">-->
+					<div class="btns" v-for="(i,index) in 6" :key="index" @click="btns($event)">
 						<md-button>
-					      	<span>{{index+1}}</span>
+							<dl>
+								<dt style="line-height:.6rem">{{index+1}}</dt>
+							</dl>
 				      </md-button>
 					</div>
-				</div>
+				<!--</div>-->
 			</div>
 			
 			
@@ -245,10 +259,15 @@
 				playmain:['和值','三同号','二同号','三不同','二不同'],
 				playmains:[true,false,false,false,false],
 				
-//				和值
-				he:['80','40','25','16','12','10','12','16','25','40','80']
+//			和值
+				he:['80','40','25','16','12','10','12','16','25','40','80'],
 
-	
+//			选中样式
+			btns_num:0,
+			types:'和值',
+			typebtns:false,
+			type_btns:['和值','三同号','二同号','三不同','二不同'],
+			
 			}
 			
 		},
@@ -256,18 +275,28 @@
 		    this.add();
 		},
 		methods: {
-			heightLinght(evt){
-				console.log(evt.path)
-				for(var i=0;i<evt.path.length;i++){
-					if(evt.path[i].localName=='button'){
-						if((evt.path[i].className=='')){
-							evt.path[i].className='active_bor_bkd_clo'
-						}else{
-							evt.path[i].className=''
+			
+//			选中效果
+			btns(e,index){
+				if(this.types==this.type_btns[2]){
+					var tDiv= document.querySelectorAll('.T .btns')
+					var bDiv= document.querySelectorAll('.B .btns')
+					e.path.forEach(Element=>{
+						if(Element.className == 'btns'){
+							console.log(Element.parentNode)
+							Element.className='btns active'
+							if(Element.parentNode.className=='T'){
+								bDiv[index].className='btns'
+							}else if(Element.parentNode.className=='B'){
+								tDiv[index].className='btns'
+							}
+						}else if(Element.className == 'btns active'){
+							Element.className='btns'
 						}
-					}
+					})
+				}else{
+					
 				}
-				
 			},
 			
 			
@@ -379,17 +408,50 @@
 
 <style scoped>
 	/*点击*/
-/* .active_bor_bkd_clo{
-	margin-top: 0.12rem !important;
-	margin-bottom: 0.1rem !important;
-	margin-left: 0.26rem !important;
-	background: yellow !important;
-} */
+.active{
+	outline: .03125rem /* 2/64 */ solid orange;
+	
+}
+.active *{
+color: orange
+}
+.btns dl{
+	width: 100% ;
+	height: 100% ;
+	padding: 0.2rem 0;
+}
+.btns{
+	display: inline-block;
+    margin: 5px;
+	border:.03125rem /* 2/64 */ solid gainsboro;
+	box-sizing: border-box;
+    border-width: 2px;
+	width: 30%;
+	border-radius: .0625rem /* 4/64 */;
+    border-color: #229474;
+    background-color: #08533c!important;
+}
+.btns button{
+	
+		width:2.5rem;
+		height: 1.26rem;
+		color: #fff !important;
+		margin-top: 0.6rem;
+		margin-left: 0.12rem;
+		float: left;
+		border: 0.09rem #229474 solid;
+		background: #08533c;
+		box-sizing: border-box;
+}
 
 
 	small {
     display: block;
   }
+  
+  
+  
+  
 	header{
 		width: 10rem;
 		height: 2.2rem;
@@ -491,7 +553,7 @@
 		border: #ccc 0.056rem solid;
 		float: right;
 	}
-	.he_main button{
+	/*.he_main button{
 		width:2.5rem;
 		height: 1.26rem;
 		color: #fff !important;
@@ -504,8 +566,8 @@
 	}
 	.he_main:nth-last-of-type(2){
 		margin-left: 1.8rem !important;
-	}
-	.san_main button{
+	}*/
+	/*.san_main button{
 		width:2.5rem;
 		height: 1.26rem;
 		color: #fff !important;
@@ -516,8 +578,8 @@
 		border: 0.09rem #229474 solid;
 		background: #08533c;
 		box-sizing: border-box;
-	}
-	.san_main2 button{
+	}*/
+	/*.san_main2 button{
 		width:8.5rem;
 		height: 1.26rem;
 		color: #fff !important;
@@ -557,7 +619,7 @@
 		background: #08533c;
 		box-sizing: border-box;
 	}
-	
+	*/
 	
 
 	
