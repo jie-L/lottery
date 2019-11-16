@@ -6,6 +6,9 @@ import 'lib-flexible/flexible'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import IconFont from '../src/assets/iconfont/iconfont.css' 
+import elementUI from 'element-ui'
+import '../node_modules/element-ui/lib/theme-chalk/index.css'
+import '../node_modules/element-ui/lib/index'
 
 
 import { MdButton, MdContent, MdTabs } from 'vue-material/dist/components'
@@ -15,6 +18,7 @@ import 'vue-material/dist/theme/default.css'
 Vue.use(MdButton)
 Vue.use(MdContent)
 Vue.use(MdTabs)
+Vue.use(elementUI)
 
 
 

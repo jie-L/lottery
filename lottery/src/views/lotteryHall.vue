@@ -3,7 +3,7 @@
     <header>
       <div style="border-right:0.015625rem #004832 solid;">
         <p class="title_text">上期开奖</p>
-        <p>136</p>
+        <p>{{this.sqkjhm}}</p>
       </div>
       <div>
         <p class="title_text">据01期截止</p>
@@ -34,7 +34,7 @@
       >
         <!--选号-->
         <div
-          style="background:#077552 ;min-height: 13rem;padding: 0.2rem 0.5rem;overflow: scroll;width: 10rem;float: left;"
+          style="background:#077552;padding: 0.2rem 0.5rem;width: 10rem;height:13rem;float: left;"
         >
           <!--玩法选择-->
           <div style="height: 1.1rem;margin-bottom: 0.4rem;">
@@ -69,7 +69,7 @@
               </p>
             </div>
         <div class="he_main">
-          <div class="btns" v-for="(i,index1) in he" @click="btn($event)" :key="index1+i">
+          <div class="btns" v-for="(i,index1) in he" @click="btn($event,index1,index1+4)" :key="index1+i">
           <md-button>
             <span>{{index1+4}}</span>
             <br />
@@ -87,7 +87,7 @@
               </p>
             </div>
             <div class="san_main">
-              <div class="btns" v-for="(i,index2) in santong" @click="btn($event)" :key="index2+i">
+              <div class="btns" v-for="(i,index2) in santong" @click="btn($event,index2,i)" :key="index2+i">
                 <md-button>
                   <span>{{i}}</span>
                   <br />
@@ -113,7 +113,7 @@
           </div>
 
           <!--二同号-->
-          <div v-if="playtext==playmain[2]">
+          <div v-if="playtext==playmain[2]" style="height:11rem;overflow-y:scroll">
             <div style="margin-bottom: 0.2rem;">
               <p style="font-size: 0.4rem;color:#48b892;">
                 <span class="san_jian">二同号单选</span> 选择同号和不同号的组合，奖励80积分
@@ -216,36 +216,15 @@
           </table>
           <div style="height: 12.3rem; overflow-y: auto;">
             <table class="table-body">
-              <tr v-for="(i,index8) in 23" :key="index8">
-                <td>
-                  <span>{{i}}期</span>
-                </td>
-                <td>
-                  <span>123</span>
-                </td>
-                <td>
-                  <span>小</span>
-                </td>
-                <td>
-                  <span>双</span>
-                </td>
-                <td>
-                  <span class="redCircle">1</span>
-                </td>
-                <td>
-                  <span>2</span>
-                </td>
-                <td>
-                  <span class="blueCircle">2</span>
-                </td>
-                <td>
-                  <span>4</span>
-                </td>
-                <td>
-                  <span>5</span>
-                </td>
-                <td>
-                  <span>6</span>
+              <tr v-for="(i,index) in GrabbingData" :key="index">
+                <td><span>{{i[0].substring(i[0].length-3,i[0].length)}}期</span></td>
+                <td class="hao"> {{i[2].split(',').join(' ')}}</td>
+                <td><span v-if="Number(i[2].split(',')[0])+Number(i[2].split(',')[1])+Number(i[2].split(',')[2])<=10">小</span><span v-else>大</span></td>
+                <td><span v-if = "(Number(i[2].split(',')[0])+Number(i[2].split(',')[1])+Number(i[2].split(',')[2]))%2 == 0">双</span><span v-else>单</span></td>
+                <td v-for="(j,$index) in 6" :class="{redCircle:j==parseInt(GrabbingData[index][2][0]) || j==parseInt(GrabbingData[index][2][2]) || j==parseInt(GrabbingData[index][2][4])}" :key="$index">
+                  <span :class="{blueCircle:j == i[5]/11,blueCircles:j == i[4]/111}">
+                    {{j}}
+                  </span>
                 </td>
               </tr>
             </table>
@@ -259,9 +238,7 @@
         共{{tickets.zhu}}注
         <span style="color:#ffc107 ;">{{tickets.jin}}模拟金</span>
       </div>
-      <router-link style="color:#fff" to="/tickets">
-        <div class="que">确定</div>
-      </router-link>
+      <div style="color:#fff" class="que" @click="commits()">确定</div>
     </footer>
   </div>
 </template>
@@ -275,6 +252,10 @@ export default {
   name: "RegularButtons",
   data() {
     return {
+      cit:'',
+//		  抓取数据
+             GrabbingData:'',
+          	isBig:false,
       //			移动端触摸移动
       startPointX: 0,
       changePointX: 0,
@@ -305,20 +286,62 @@ export default {
       },
 
       aindex:'',
+
+      timer:null,
+      sqkjhm:'',
     };
   },
   created() {
     // this.minse()
-    this.$axios
-      .get("/index/kuai", {
-        params: {}
-      })
-      .then(data => {
-        console.log(data);
-      });
+    if(location.href.split('?')[1]){
+      this.cit = location.href.split('?')[1]
+    }else if(localStorage.routerUrl){
+      this.cit = localStorage.routerUrl
+    }
+
+    this.qingqiu()
   },
   methods: {
-    btn(e, index) {
+    qingqiu(){
+      this.$axios
+      .get("/index/kuai", {
+        params:{
+          city:this.cit,
+          username:localStorage.username
+          }
+      })
+      .then(data => {
+        console.log(data.data);
+        this.GrabbingData=data.data.data
+        this.sqkjhm=this.GrabbingData[this.GrabbingData.length-1][2].split(',').join(' ')
+        if(data.data.type==1){
+          alert('你中奖了,你的中奖号码为'+data.data.userhm+'  ,开奖号码为'+data.data.ksanhm)
+          localStorage.userpoint=data.data.point
+        }
+        console.log('--第1次拉取-------')
+      })
+      // var min = 1
+      // this.timer = setInterval(() => {
+      //     this.$axios
+      //         .get("/index/kuai", {
+      //           params:{
+      //             city:this.cit,
+      //             username:localStorage.username
+      //             }
+      //         })
+      //         .then(data => {
+      //           console.log(data.data);
+      //           this.GrabbingData=data.data.data
+      //           if(data.data.type==1){
+      //             alert('你中奖了,你的中奖号码为'+data.data.userhm+'  ,开奖号码为'+data.data.ksanhm)
+      //         localStorage.userpoint=data.data.point
+      //           }
+      //         })
+      //     min++
+      //     console.log('--第' + min + '次拉取-------')
+      // }, 60000)
+    },
+    btn(e, index,num) {
       if (this.playtext == this.playmain[2]) {
         var tDiv = document.querySelectorAll(".T .btns");
         var bDiv = document.querySelectorAll(".B .btns");
@@ -340,48 +363,62 @@ export default {
         for(var i=0;i<e.path.length;i++){
           if(e.path[i].className=='btns'){
               e.path[i].className='btns active'
-              if (this.playtext == this.playmain[0]) {
-                this.tickets.zhu+=1;
-                this.tickets.jin += 2;
+              if (this.playtext == this.playmain[0]||this.playtext == this.playmain[1]) {
+                this.add(this.playtext,1,2,num)
               }else{
                 this.tickets.zhu=0;
                 this.tickets.jin=0;
               }
           }else if(e.path[i].className=='btns active'){
               e.path[i].className='btns'
-              if (this.playtext == this.playmain[0]) {
-                this.tickets.zhu-=1;
-                this.tickets.jin-=2;
+              if (this.playtext == this.playmain[0]||this.playtext == this.playmain[1]) {
+                this.jian(this.playtext,1,2,num)
               }else{
                 this.tickets.zhu=0;
                 this.tickets.jin=0;
               }
           }
         }
-
-
-        
-        // var suan=null;
-        // e.path.forEach(Element => {
-        //   if (Element.className == "btns") {
-        //     Element.className = "btns active";
-        //     // 判断点击个数 num
-        //     if (this.playtext == this.playmain[0]) {
-        //       suan=true
-        //     }
-        //   } else if (Element.className == "btns active") {
-        //     Element.className = "btns";
-        //     // 判断点击个数 num
-        //     if (this.playtext == this.playmain[0]) {
-        //       // console.log('减')
-        //       suan=false
-        //       // this.tickets.zhu-=1;
-        //       // this.tickets.jin -= 2;
-        //     }
-        //   }
-        // });
+        this.tickets.num.sort(function(a,b){
+                  return a-b;
+              })
       }
     },
+    add(type,zhu,jin,num){
+      this.tickets.type=type
+      this.tickets.zhu+=zhu;
+      this.tickets.jin += jin;
+      this.tickets.num.push(num)
+    },
+    jian(type,zhu,jin,num){
+      this.tickets.type=type
+      this.tickets.zhu-=zhu;
+      this.tickets.jin -= jin;
+      for(var i=0;i<this.tickets.num.length;i++){
+        if(this.tickets.num[i]==num){
+          this.tickets.num.splice(i,1)
+        }
+      }
+    },
+    commits(){
+      if(this.tickets.num.length>0){
+        this.$store.commit('setTickets',this.tickets)
+        this.$router.push('/tickets')
+      }else{
+        alert('至少选择一注')
+      }
+    },
+    quchong(arr){//this,tickets.num=this.quchong(this.tickets.num)
+      let newArr = []
+      arr.forEach((val)=>{
+            if(newArr.indexOf(val) == -1){
+                  newArr.push(val)
+              }
+        })    
+      return newArr  
+    },
+
+
 
     //移动端 触摸移动
     show(index) {
@@ -401,10 +438,10 @@ export default {
       }
       let currPointX = e.changedTouches[0].pageX;
       let leftSlide = this.startPointX - currPointX;
-      if (leftSlide > 5 && this.showIndex < this.imgSrc.length - 1) {
+      if (leftSlide > 20 && this.showIndex < this.imgSrc.length - 1) {
         this.show(++this.showIndex);
         this.type = false;
-      } else if (leftSlide < -30 && this.showIndex > 0) {
+      } else if (leftSlide <-30&& this.showIndex > 0) {
         this.show(--this.showIndex);
         this.type = true;
       }
@@ -627,18 +664,18 @@ header div .title_text {
   border-bottom: 1px solid #00422c;
   border-right: 1px solid #00422c;
 }
-.table-head th:nth-of-type(1) {
-  width: 1.25rem;
-}
-.table-head th:nth-of-type(2) {
-  width: 1.25rem;
-}
-.table-head th:nth-of-type(3) {
-  width: 1.25rem;
-}
-.table-head th:nth-of-type(4) {
-  width: 1.25rem;
-}
+.table-head th:nth-of-type(1){
+		width:2rem;
+	}
+	.table-head th:nth-of-type(2){
+		width:1.5rem;
+	}
+	.table-head th:nth-of-type(3){
+		width:1.1rem;
+	}
+	.table-head th:nth-of-type(4){
+		width:1.1rem;
+	}
 .table-body {
   width: 100%;
   border-collapse: collapse;
@@ -656,46 +693,58 @@ header div .title_text {
   border-right: 1px solid #00422c;
   height: 0.8rem;
 }
-.table-body td:nth-of-type(1) {
-  width: 1.25rem;
-}
-.table-body td:nth-of-type(2) {
-  width: 1.25rem;
-}
-.table-body td:nth-of-type(3) {
-  width: 1.25rem;
-}
-.table-body td:nth-of-type(4) {
-  width: 1.25rem;
-}
-.table-body tr:nth-of-type(2n) {
-  background: #0b5f45;
-}
-.redCircle,
-.blueCircle {
-  width: 0.625rem;
-  height: 0.625rem;
-  background: red;
-  display: inline-block;
-  border-radius: 50%;
-  line-height: 0.625rem;
-  color: white;
-  text-align: center;
-  position: relative;
-}
-.blueCircle:before {
-  content: "2";
-  line-height: 0.375rem;
-  width: 0.375rem;
-  height: 0.375rem;
-  position: absolute;
-  border-radius: 50%;
-  right: -0.10875rem;
-  top: -0.078125rem;
-  background: blue;
-  font-size: 0.15625rem;
-  text-align: center;
-}
+.table-body td:nth-of-type(1){
+		width:2rem;
+	}
+	.table-body td:nth-of-type(2){
+		width:1.1rem;
+	}
+	.table-body td:nth-of-type(3){
+		width:1.1rem;
+	}
+	.table-body td:nth-of-type(4){
+		width:1.1rem;
+	}
+	.table-body tr:nth-of-type(2n){
+		background: #0b5f45;
+	}
+.redCircle span,.blueCircle,.blueCircles{
+		width: 0.625rem;
+		height: 0.625rem;
+		background: red;
+		display: inline-block;
+		border-radius: 50%;
+		line-height: 0.625rem;
+		color: white;
+		text-align: center;
+		position: relative;
+	}
+	.blueCircle:before{
+		content:'2';
+		line-height: 0.375rem;
+		width:0.375rem;
+		height: 0.375rem;
+		position: absolute;
+		border-radius: 50%;
+		right:-0.10875rem;
+		top:-0.078125rem;
+		background: blue;
+		font-size: 0.15625rem;
+		text-align: center;
+	}
+	.blueCircles:before{
+		content:'3';
+		line-height: 0.375rem;
+		width:0.375rem;
+		height: 0.375rem;
+		position: absolute;
+		border-radius: 50%;
+		right:-0.10875rem;
+		top:-0.078125rem;
+		background: blue;
+		font-size: 0.15625rem;
+		text-align: center;
+	}
 
 footer {
   position: fixed;

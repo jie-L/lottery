@@ -9,15 +9,15 @@
 				<div>
 					<div class="login_top">
 						<div class="touxiangimgs">
-							<div class="touxiangimg"><img :src="login_up.img_url" v-show="imgUrl" style="display: inline-block;width: 100%;height: 100%;"></div>
-							<input class="file_in" type="file" @change="btn($event)">
+							<div v-if="type==false" class="touxiangimg"><img :src="login_up.img_url" v-show="imgUrl" style="display: inline-block;width: 100%;height: 100%;"></div>
+							<input v-if="type==false" class="file_in" type="file" @change="btn($event)">
 						</div>
 						<div class="zc_box">
 							<label for="">账号：
-                <input type="text" v-model="login_up.account" @input="input">
+                <input type="text" style="padding-left:1rem;border-radius:0.3rem" v-model="login_up.account" @input="input">
               </label>
               <label for="">密码：
-                <input type="password" v-model="login_up.password" @input="input">
+                <input type="password" style="padding-left:1rem;border-radius:0.3rem" v-model="login_up.password" @input="input">
               </label>
 
 							<button class="surebtn" :class="{active:bga}" @click="Determine">确定</button>
@@ -25,8 +25,8 @@
 					</div>
 				</div>
         <div class="btn">
-				  <div @click="type=true" style="background: yellowgreen">登录</div>
-				  <div @click="type=false" style="background: orange">注册</div>
+				  <div @click="type=true" style="background: yellowgreen;border-radius:0.3rem">登录</div>
+				  <div @click="type=false" style="background: orange;border-radius:0.3rem">注册</div>
 		  	</div>
 			</div>
 			
@@ -62,10 +62,19 @@ export default {
       if(this.type){
         // 登录
       this.$axios
-        .post("/users/in", this.login_up)
+        .post("/users/in", {
+        account:this.login_up.account,
+        password:this.login_up.password,
+       })
         .then(res => {
+          console.log(res)
           if(res.data.type =='yes'){
-            location.href ='/'
+            this.$router.push('/')
+            localStorage.url=res.data.user.img_url
+            localStorage.username=res.data.user.username
+            localStorage.usercoin=res.data.user.usercoin
+            localStorage.usermoni=res.data.user.usermoni
+            localStorage.userpoint=res.data.user.userpoint
           }
           alert(res.data.data);
         })
@@ -106,7 +115,6 @@ export default {
 					console.log(data.data)
           this.login_up.img_url= 'http://localhost:8000/img/'+data.data
           this.imgUrl = true
-          localStorage.url = this.login_up.img_url
 				},(err)=>{
 					console.log(err)
         })
@@ -167,7 +175,7 @@ input{
 .touxiangimg{
   width:100%;
   height: 100%;
-  border: solid 1px #000;
+  border: solid 1px #fff;
   border-radius: 50%;
 }
 
@@ -183,7 +191,7 @@ input{
 .touxiangimg{
   width: 1.6rem;
   height:1.6rem;
-  border: solid 1px #000;
+  border: solid 1px #fff;
   border-radius: 50%;
   /*position:absolute;
   left:0;top:0;*/

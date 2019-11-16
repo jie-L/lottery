@@ -13,22 +13,23 @@
             <div class="content">
                 <!-- content_div 活的div -->
                 <div class="content_div">
-                    <div class="content_min" v-show="type">
+                    <div class="content_min" v-if="this.$store.state.tickets.length<=0">
                         <div class="JuZ">
-                            <span class="oneZ">至少选择一注，</span><span class="towZ">去选号</span>
+                            <span class="oneZ">至少选择一注，</span>
+                            <router-link style="color: #1976d2;" to="/lotteryHall"><span class="towZ">去选号</span></router-link>
                         </div>
                     </div>
-                    <div class="content_min" v-for="(i,index) in json" :key="index+''">
+                    <div class="content_min" v-else v-for="(i,index) in this.$store.state.tickets" :key="index">
                         <!-- Trash 垃圾桶 -->
                         <div class="Trash">
-                            <i @click="dele" class="iconfont">&#xe696;</i>
+                            <i @click="dele(index)" class="iconfont">&#xe696;</i>
                         </div>
                         <div class="Right">
                             <div class="Right_top">
-                                <span>{{i.name}}</span>
+                                <span>{{i.num.join('  ')}}</span>
                             </div>
                             <div class="Right_bottom">
-                                <span>和值 <span>{{i.age}}</span>注 <span>{{i.aaa}}</span>模拟金</span>
+                                <span>{{i.type}}  <span>{{i.zhu}}</span>注  <span>{{i.jin}}</span>模拟金</span>
                             </div>
                             <!--  -->  
                         </div>
@@ -43,9 +44,9 @@
       </div>
         <div class="footer">
             <div class="footer_left">
-                <span class="Fbai">共<span>2</span>注 </span> <span class="YeSpan"><span>1</span>模拟金</span>
+                <span class="Fbai">共<span>{{this.$store.getters.getzhu}}</span>注 </span> <span class="YeSpan"><span>{{this.$store.getters.getjin}}</span>模拟金</span>
             </div>
-            <div class="footer_right">
+            <div class="footer_right" @click="alert()">
                 <!-- 点击 跳转页面 @click -->
                 <span>投注</span>
             </div>
@@ -57,29 +58,31 @@
 export default {
     data() {
         return {
-            type:false,
-           json:[
-               {
-                   'name':11,
-                   'age':2,
-                   'aaa':3
-               },
-               {
-                   'name':111,
-                   'age':23,
-                   'aaa':31
-               },
-               {
-                   'name':111,
-                   'age':23,
-                   'aaa':31
-               }
-           ]
         }
     },
     methods: {
+        alert(){
+            var a=confirm('共选中'+this.$store.getters.getzhu+'注，合计'+this.$store.getters.getjin+'模拟金，确认支付吗？')
+            if(a){
+                this.$axios.post('/shops/zhu',{
+                    moni:this.$store.getters.getjin,
+                    username:localStorage.username,
+                    shoplist:this.$store.state.tickets,
+                    monijin:this.$store.getters.getjin,
+                    }).then(data=>{
+                    console.log(data)
+                    alert(data.data.type)
+                    this.$store.commit('reTickets')
+                    localStorage.usermoni=data.data.moni
+                    localStorage.userpoint=data.data.point
+                })
+            }else{
+                console.log(1234)
+            }
+        },
         dele(index){
-            this.json.splice(index,1)
+           this.$store.commit('delTickets',index)
+           console.log(this.$store.state.tickets)
         }
     },
 }

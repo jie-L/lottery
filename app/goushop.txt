@@ -1,0 +1,23 @@
+[
+    {
+        shopid:0,
+        img:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546081779966&di=20ebc0440402aa12a980d968b228e5ce&imgtype=0&src=http%3A%2F%2Fimages.51bi.com%2Fopt%2Fsiteimg%2Fp%2F20140610%2F1043b5f316d16f0a00c722bec039fac5.jpeg',
+        name:'烟斗(小号)',
+        goldcoin:99,
+        shopprize:100,
+    },
+    {
+        shopid:1,
+        img:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546081779966&di=20ebc0440402aa12a980d968b228e5ce&imgtype=0&src=http%3A%2F%2Fimages.51bi.com%2Fopt%2Fsiteimg%2Fp%2F20140610%2F1043b5f316d16f0a00c722bec039fac5.jpeg',
+        name:'烟斗(中号)',
+        goldcoin:199,
+        shopprize:200,
+    },
+    {
+        shopid:2,
+        img:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546081779966&di=20ebc0440402aa12a980d968b228e5ce&imgtype=0&src=http%3A%2F%2Fimages.51bi.com%2Fopt%2Fsiteimg%2Fp%2F20140610%2F1043b5f316d16f0a00c722bec039fac5.jpeg',
+        name:'烟斗(大号)',
+        goldcoin:399,
+        shopprize:400,
+    },
+]

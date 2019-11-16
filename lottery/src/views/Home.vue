@@ -3,15 +3,17 @@
 		<div class="container">
 			<div class="login">
 				<!-- 判断点击跳转登录或者注册 -->
-				<router-link class="LoginTo" :to="isLogin?'Login?up':'Login?in'"><span @click="isLogin = false">注册</span><span>|</span><span @click="isLogin = true">登录</span></router-link>
+				<router-link v-if="logintype" class="LoginTo" :to="isLogin?'Login?up':'Login?in'"><span @click="isLogin = false">注册</span><span>|</span><span @click="isLogin = true">登录</span></router-link>
+				<router-link v-else class="LoginTo" to="/Login?up"><span @click="exit()">退出</span></router-link>
 			</div>
 			<div class="tit">
 				<p class="firend"><span>{{time}}</span>好!朋友</p>
 				<div class="header-img">
-					<img :src="lSimg" alt="">
+					<img v-if="isLogin" :src="imgurl" alt="">
+					<img v-else src="../assets/img/tx.png" alt="">
 				</div>
 				<div class="username">
-					<p>用户名</p>
+					<p>{{username}}</p>
 				</div>
 				<div class="money clearfix">
 					<div><p><span>{{mod}}</span>模拟金</p></div>
@@ -22,8 +24,8 @@
 				<div class="item" v-for = "(i,index) in arr" :key="index">
 					<!-- 判断是否可点击跳转页面 -->
 					<router-link :to="i.isCli?'/lotteryHall?'+i.add:'/'">
-						<div class="ks-box">
-							<img :src="i.isCli?img1:img2" alt="">
+						<div @click="local(i.add)" class="ks-box">
+							<img :src="index==0?img1:img2" alt="">
 							<md-button class="ani md-icon-button md-accent">
      						 </md-button>
 						</div>
@@ -167,7 +169,9 @@
 	export default {
 		data () {
 		  return {
-			lSimg:localStorage.url,
+			  logintype:false,
+			imgurl:'',
+			username:'',
 		  	isLogin:true,
 		  	time:'早上',
 		  	hour:0,
@@ -175,58 +179,57 @@
 		  	soc:2,
 		  	img1:'http://haoxg.xyz/lottery/img/happyk3.ea0489f1.png',
 		  	img2:'http://haoxg.xyz/lottery/img/k31.f388457f.jpg',
-		    arr:[
-			    {
+		    arr:[{
+			    	isCli:true,
+			    	name:'北京快三',
+			    	add:'beijing'
+			    },{
 			    	isCli:true,
 			    	name:'河北快三',
 			    	add:'hebei'
 			    },{
 			    	
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'安徽快三',
 			    	add:'anhui'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'江苏快三',
 			    	add:'jiangsu'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'江西快三',
 			    	add:'jiangxi'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'内蒙古快三',
 			    	add:'neimeng'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'吉林快三',
 			    	add:'jilin'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'湖北快三',
 			    	add:'hubei'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'贵州快三',
 			    	add:'guizhou'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'广西快三',
 			    	add:'guangxi'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'甘肃快三',
 			    	add:'gansu'
 			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'福建快三',
 			    	add:'fujian'
 			    },{
-			    	isCli:false,
-			    	name:'北京快三',
-			    	add:'beijing'
-			    },{
-			    	isCli:false,
+			    	isCli:true,
 			    	name:'上海快三',
 			    	add:'shanghai'
 			    }
@@ -234,6 +237,14 @@
 		  };
 		},
 		methods:{
+			exit(){
+				localStorage.clear()
+				this.$store.commit('reTickets')
+			},
+			local(url){
+				console.log(url)
+				localStorage.setItem('routerUrl',url)
+			},
 			getTime(){
 				var tim = new Date();
 				this.hour = tim.getHours();
@@ -254,6 +265,18 @@
 			},
 		},
 		created(){
+			if(localStorage.username){
+				this.username=localStorage.username
+				this.imgurl=localStorage.url
+				this.mod=localStorage.usermoni
+				this.soc=localStorage.userpoint
+				this.logintype=false
+			}else{
+				this.username='用户名'
+				this.imgurl=''
+				this.logintype=true
+			}
+
 			this.getTime()
 			var _this = this
 			setInterval(function(){

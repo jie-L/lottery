@@ -7,14 +7,7 @@
 <script>
 export default {
   created() {
-    this.$axios
-      .get("/index/kuai", {
-        params: {
-        }
-      })
-      .then(data => {
-        console.log(data);
-      });
+  
   }
 }
 </script>

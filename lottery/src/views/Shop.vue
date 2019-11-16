@@ -17,7 +17,7 @@
             <p @click="toLefts" :class="[!type?'active':'']">购物区</p>
           </div>
         </div>
-        <div style="width:10rem;position:relative;overflow:hidden;height:13rem">
+          <div style="width:10rem;position:relative;overflow:hidden;height:13rem">
           <div
             class="outNode"
             style="width:20rem;height:13rem;position:absolute;top:0.15rem;left:0"
@@ -25,87 +25,110 @@
             @touchstart="touchstart"
           >
             <div class="item" style="width:10rem;float:left">
-              <div class="list1" style="width:50%;float:left;background:white;margin-top:0.0581rem">
+
+              <div class="list1" style="margin:2%;width:46%;float:left;" v-for="(i,$index) in pointarr" :key="$index">
+                <popup :shopid="i.shopid" @isSure="issurepoint">
                 <div class="item-img">
                   <img
-                    src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546077945538&di=003d3de1479ae95ab6131ca11d042c4a&imgtype=0&src=http%3A%2F%2Fa.vpimg3.com%2Fupload%2Fmerchandise%2Fpdcvis%2F146767%2F2017%2F1104%2F115%2F88257c95-7205-4390-8eab-635fc8384069_t.jpg"
+                    :src="i.img"
+                    style="width:3rem;height:2.75rem"
                     alt
                   />
                 </div>
-                <p>iphoneX(尊贵铂金)</p>
-                <p>积分：9999</p>
-                <p>市场参考价：9999.00</p>
-              </div>
-              <div class="list1" style="width:50%;float:left;background:white">
-                <div class="item-img">
-                  <img
-                    src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546077790483&di=716de166c55fe352462ca970809e926f&imgtype=0&src=http%3A%2F%2Fi1.hexunimg.cn%2F2016-03-15%2F182772684.jpg"
-                    style="padding-top:1rem;padding-bottom:0.67rem;"
-                    alt
-                  />
-                </div>
-                <p>花费充值卡</p>
-                <p>积分：100.00</p>
-                <p>市场参考价：9999.00</p>
+                <p>{{i.name}}</p>
+                <p>积分：{{i.goldcoin.toFixed(2)}}</p>
+                <p>市场参考价：{{i.shopprize.toFixed(2)}}</p>
+                </popup>
               </div>
             </div>
+
+
+            
             <div class="item" style="width:10rem;float:right">
-              <div class="list1" style="width:50%;float:left;">
+              
+              <div class="list1" style="margin:2%;width:46%;float:left;" v-for="(i,$index) in shoparr" :key="$index">
+                <popup :shopid="i.shopid" @isSure="issure">
                 <div class="item-img">
                   <img
-                    src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546081779966&di=20ebc0440402aa12a980d968b228e5ce&imgtype=0&src=http%3A%2F%2Fimages.51bi.com%2Fopt%2Fsiteimg%2Fp%2F20140610%2F1043b5f316d16f0a00c722bec039fac5.jpeg"
+                    :src="i.img"
                     style="width:2.688rem;height:2.75rem"
                     alt
                   />
                 </div>
-                <p>烟斗(小号)</p>
-                <p>积分：9999</p>
-                <p>市场参考价：9999.00</p>
-              </div>
-              <div class="list1" style="width:50%;float:left;">
-                <div class="item-img">
-                  <img
-                    src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546081779966&di=20ebc0440402aa12a980d968b228e5ce&imgtype=0&src=http%3A%2F%2Fimages.51bi.com%2Fopt%2Fsiteimg%2Fp%2F20140610%2F1043b5f316d16f0a00c722bec039fac5.jpeg"
-                    style="width:2.688rem;height:2.75rem"
-                    alt
-                  />
-                </div>
-                <p>烟斗(小号)</p>
-                <p>积分：9999</p>
-                <p>市场参考价：9999.00</p>
-              </div>
-              <div class="list1" style="width:50%;float:left;">
-                <div class="item-img">
-                  <img
-                    src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546081779966&di=20ebc0440402aa12a980d968b228e5ce&imgtype=0&src=http%3A%2F%2Fimages.51bi.com%2Fopt%2Fsiteimg%2Fp%2F20140610%2F1043b5f316d16f0a00c722bec039fac5.jpeg"
-                    style="width:2.688rem;height:2.75rem"
-                    alt
-                  />
-                </div>
-                <p>烟斗(小号)</p>
-                <p>积分：9999</p>
-                <p>市场参考价：9999.00</p>
+                <p>{{i.name}}</p>
+                <p>金币：{{i.goldcoin.toFixed(2)}}</p>
+                <p>市场参考价：{{i.shopprize.toFixed(2)}}</p>
+                </popup>
               </div>
             </div>
+            
           </div>
         </div>
+        
       </div>
     </div>
+    
   </div>
 </template>
 <script>
+import popup from '../components/Popup'
 export default {
   // name:'Shoppingpointsexchange',
+  components:{
+    popup,
+  },
   data() {
     return {
       type: true,
       startPointX: 0,
       changePointX: 0,
       showIndex: 0,
-      imgSrc: ["1", "2"]
+      imgSrc: ["1", "2"],
+      shoparr:[],
+      pointarr:[]
     };
   },
+  created(){
+    this.$axios.get('/shops/hq').then((data)=>{
+      console.log(data)
+      this.shoparr=data.data.shoplist
+      this.pointarr=data.data.pointlist
+    },(err)=>{
+      console.log(1)
+    })
+  },
   methods: {
+    issurepoint(data){
+      console.log(data)
+      if(data[0]){
+        if(localStorage.username){
+          //执行购买
+          this.$axios.post('/shops/dh',{shopid:data[1],username:localStorage.username}).then(data=>{
+            console.log(data)
+            alert(data.data.type)
+            localStorage.userpoint=data.data.point
+          })
+        }else{
+          alert('请先返回首页登录')
+        }
+      }
+    },
+    issure(data){
+      console.log(data)
+      if(data[0]){
+        if(localStorage.username){
+          //执行购买
+          this.$axios.post('/shops/gm',{shopid:data[1],username:localStorage.username}).then(data=>{
+            console.log(data)
+            alert(data.data.type)
+            localStorage.usercoin=data.data.usercoin
+            localStorage.usermoni=data.data.usermoni
+          })
+        }else{
+          alert('请先返回首页登录')
+        }
+      }
+    },
     toRights() {
       this.type = true;
       var outNode = document.querySelector(".outNode");
@@ -141,10 +164,13 @@ export default {
         this.type = true;
       }
     }
-  }
+  },
+  // components:{
+
+  // }
 };
 </script>
-<style>
+<style scoped>
 * {
   margin: 0;
   padding: 0;
@@ -167,9 +193,11 @@ export default {
 .item p {
   text-align: center;
   color: #807474;
+  line-height: 0.6rem;
 }
 .Shoppingpointsexchange {
   width: 10rem;
+  overflow: hidden;
 }
 .application {
   width: 10rem;
@@ -233,6 +261,5 @@ export default {
 .active {
   border-bottom: 2px solid red;
 }
-.list {
-}
+
 </style>

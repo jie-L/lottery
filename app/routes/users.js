@@ -26,6 +26,9 @@ router.post('/up', function (req, res) {
     }
     if (vip_type) {
       json.password = md5(json.password)
+      json.usercoin=3000
+      json.usermoni=0
+      json.userpoint=0
       vip.push(json)
       fs.writeFileSync('./login.txt', JSON.stringify(vip), 'utf8');
       res.send({ type: 'yes', data: '注册成功' })
@@ -52,15 +55,22 @@ router.post('/in',function (req,res) {
     json.password = md5(json.password)
     var vip = eval(fs.readFileSync('./login.txt', 'utf8'))
     var vip_type = false;
+    var data={}
     for (var i = 0; i < vip.length; i++) {
       if (vip[i].account == json.account && vip[i].password == json.password) {
         vip_type = true
+        data.username=vip[i].account
+        data.usercoin=vip[i].usercoin
+        data.usermoni=vip[i].usermoni
+        data.userpoint=vip[i].userpoint
+        data.img_url=vip[i].img_url
         // data = json.url
       }
     }
     if(vip_type){
       res.send({
         type:'yes',
+        user:data,
         data:'登录成功'
       })
     }else{
